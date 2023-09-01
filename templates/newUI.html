@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <title>Section with Container</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif; /* You can replace Arial with your desired font */
+}
+
+.main-section {
+    background-color: #F5F5F5;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    /* background-color: #eaeaea; */
+    display: flex; /* Using flex to align the divs side by side */
+    flex-direction: column; /* Stack the elements vertically */
+    align-items: center; /* Center aligns the child elements */
+}
+
+.heading {
+    font-size: 24px;
+    /* margin-bottom: 20px; */
+    text-align: left;
+    padding-right: 2rem;
+    padding: 0rem 12rem;
+    position: relative;
+    bottom: -2rem;
+/* Space below the heading */
+}
+
+.right-div {
+    width: 52%; /* Equal width for both divs with some space between */
+    height: 485px; /* Adjust the height as needed */
+    background-color: #fff; /* Background color */
+    /* text-align: center; Center aligns the text */
+    margin: 10px; /* Some margin to separate the divs */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    text-align: left;
+    padding: 2rem 2rem;
+}
+.mistakes {
+    width: 10%; /* Equal width for both divs with some space between */
+    height: 485px; /* Adjust the height as needed */
+    background-color: #fff; /* Background color */
+    /* text-align: center; Center aligns the text */
+    margin: 10px; /* Some margin to separate the divs */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    text-align: left;
+    padding: 2rem 2rem;
+}
+.left-div{
+    background-color: #fff;
+    width: 35%; /* Equal width for both divs with some space between */
+    height: 550px; /* Adjust the height as needed */
+    /* text-align: center; Center aligns the text */
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+.heading-left{
+    background-color: #fff;
+    text-align:left ;
+    padding: 1px 20px;
+    border-bottom: 2px solid #E5E7EB;
+    font-size: 0.8rem;
+    font-weight:100;
+}
+@media (min-width: 768px) { /* Responsive design for larger screens */
+    .container {
+        flex-direction: row; /* Arrange the left and right divs horizontally */
+    }
+}
+
+.form-left {
+    padding: 20px;
+    /* background-color: #f8f8f8; */
+    border-radius: 10px; /* Rounded corners */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); Shadow effect */
+    text-align: left;
+    margin-top: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+input[type="file"] {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: -20px;
+    font-size: 14px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Rounded corners for inputs */
+    margin-bottom: 10px;
+}
+textarea{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Rounded corners for inputs */
+    margin-bottom: -20px;
+    height: 100px;
+}
+button {
+    padding: 10px 20px;
+    /* background-color: #007bff; Background color for the button */
+    background-image: linear-gradient(to right,#e36da1,#334adc);
+    color: #ffffff; /* Text color for the button */
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 5px; /* Rounded corners for the button */
+    cursor: pointer; /* Hand cursor on hover */
+    transition: background-color 0.3s; /* Smooth color transition */
+}
+
+
+.search-results {
+    color: #333;
+    font-size: 16px;
+}
+
+p{
+    color: #667D8F;
+    font-size: 0.8rem;
+}
+.highlight{
+    border-bottom: 2px solid red;
+    cursor: pointer;
+  }
+  .tooltip {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .highlight:hover + .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<section class="main-section">
+  <div class="heading">
+      <h1>Talkings about PDF</h1>
+  </div>
+  <div class="container">
+      <div class="left-div">
+          <div class="heading-left">
+              <h2>QUESTIONS WITH DOCUMENTS</h2>
+          </div>
+          <div class="form-left">
+              <form action="" method="post">
+                  <p>The title of the blog post</p>
+                  <label for="query">Query:</label>
+                  <textarea id="query" name="query" placeholder="Enter your Query Here" required></textarea>
+                  <p>The subheading of the blog post</p>
+                  <button type="submit">Generate</button>
+              </form>
+          </div>
+      </div>
+      <div class="right-div">
+          {% if original_sentence %}
+          <h2>Original Sentence (Mistakes Highlighted)</h2>
+          <p id="original">{{ original_sentence|safe }}</p>
+          {% endif %}
+          {% if corrected_sentence %}
+          <p id="correction" style="display:none;">{{ corrected_sentence|safe }}</p>
+          {% endif %}
+      </div>
+  </div>
+  <div id="tooltip" class="tooltip"></div>
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const highlightedWords = document.querySelectorAll(".highlight");
+          const tooltip = document.getElementById('tooltip');
+
+          highlightedWords.forEach((wordElement) => {
+              wordElement.addEventListener("mouseover", function(event) {
+                  const correctedWord = wordElement.getAttribute("data-corrected");
+                  if (correctedWord) {
+                      tooltip.textContent = "Suggestion: " + correctedWord;
+                      tooltip.style.left = event.clientX + "px";
+                      tooltip.style.top = (event.clientY + 10) + "px";
+                      tooltip.style.display = "block";
+                  }
+              });
+
+              wordElement.addEventListener("mouseout", function() {
+                  tooltip.style.display = "none";
+              });
+
+              wordElement.addEventListener("click", function() {
+                  const correctedWord = wordElement.getAttribute("data-corrected");
+                  if (correctedWord) {
+                      wordElement.textContent = correctedWord;
+                      wordElement.removeAttribute("data-corrected");
+                      wordElement.classList.remove("highlight");
+                  }
+              });
+          });
+      });
+  </script>
+    
+</body>
+</html>

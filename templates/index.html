@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ProWritingAid Flask App</title>
+</head>
+<body>
+    <h1>Grammar Checker</h1>
+
+    <form method="POST" action="/chat_start">
+        <textarea name="sentence"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if original_sentence %}
+    <h2>Original Sentence:</h2>
+    <p>
+        {% for word in original_sentence.split(" ") %}
+            {% if word in mistakes %}
+                <span style="background-color: yellow;">{{ word }}</span>
+            {% else %}
+                {{ word }}
+            {% endif %}
+            {% if not loop.last %}&nbsp;{% endif %}
+        {% endfor %}
+    </p>
+    <h2>Corrected Sentence:</h2>
+    <p>{{ corrected_sentence }}</p>
+    {% endif %}
+
+    {% if error %}
+    <h2>Error:</h2>
+    <p>{{ error }}</p>
+    {% endif %}
+
+</body>
+</html>
